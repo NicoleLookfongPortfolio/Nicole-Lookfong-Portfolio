@@ -157,6 +157,47 @@ Join PortfolioProject..CovidVaccinations vac
 where dea.continent is not null
 --order by 2,3
 
-
 Select *
 From PercentPopulationVaccinated
+
+
+
+
+--SQL Code for Tableau Visualization
+
+--1.
+
+Select Date, Sum(new_cases)as Daily_Total_Cases, Sum(cast(new_deaths as int))as Daily_Total_Deaths, Sum(cast(new_deaths as int))/NULLIF(Sum(new_cases),0)*100 as DeathPercentage --, total_deaths, (total_deaths/total_cases)*100 as DeathPercentage
+From PortfolioProject..CovidDeaths
+--Where location like '%states%' and 
+Where continent is not null
+--Group by Date
+Order by 1,2
+
+--2.
+
+Select location, SUM(cast(new_deaths as int)) as TotalDeathCount
+From PortfolioProject..CovidDeaths
+--Where location like '%states%'
+Where continent is null
+and location not in ('World', 'European Union', 'International')
+and location not like '%income'
+Group by location
+order by TotalDeathCount desc
+
+--3.
+
+Select location, population, MAX(total_cases) as HighestInfectionCount, MAX((total_cases/population))*100 as PercentPopulationInfected
+From PortfolioProject..CovidDeaths
+--Where location like '%states%'
+Group by location, population
+order by PercentPopulationInfected desc
+
+--4.
+
+Select location, population, MAX(total_cases) as HighestInfectionCount, MAX((total_cases/population))*100 as PercentPopulationInfected
+From PortfolioProject..CovidDeaths
+--Where location like '%states%'
+Group by location, population, date
+order by PercentPopulationInfected desc
+
