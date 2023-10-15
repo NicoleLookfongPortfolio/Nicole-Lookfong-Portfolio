@@ -167,7 +167,7 @@ From PercentPopulationVaccinated
 
 --1.
 
-Select Date, Sum(new_cases)as Daily_Total_Cases, Sum(cast(new_deaths as int))as Daily_Total_Deaths, Sum(cast(new_deaths as int))/NULLIF(Sum(new_cases),0)*100 as DeathPercentage --, total_deaths, (total_deaths/total_cases)*100 as DeathPercentage
+Select Sum(new_cases)as Daily_Total_Cases, Sum(cast(new_deaths as int))as Daily_Total_Deaths, Sum(cast(new_deaths as int))/NULLIF(Sum(new_cases),0)*100 as DeathPercentage --, total_deaths, (total_deaths/total_cases)*100 as DeathPercentage
 From PortfolioProject..CovidDeaths
 --Where location like '%states%' and 
 Where continent is not null
